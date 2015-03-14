@@ -52,13 +52,29 @@ def auto_norm(dataset):
 
     m = dataset.shape[0]
     norm_dataset = dataset - tile(min_value, (m, 1))
+    # Notice: linalg.solve(matA, matB) for division operation
     norm_dataset = norm_dataset/tile(data_range, (m, 1))
 
     return norm_dataset, data_range, min_value
 
 
+def dating_class_test():
+    ratio = 0.10
+    dating_data_matrix, dating_labels = file2matrix('datingTestSet2.txt')
+    norm_matrix, ranges, min_value = auto_norm(dating_data_matrix)
+    m = norm_matrix.shape[0]
 
+    num_test_vectors = int(m*ratio)
+    error_count = 0.0
 
+    for i in range(num_test_vectors):
+        classifier_result = classify0(norm_matrix[i, :], norm_matrix[num_test_vectors:m, :],
+                                      dating_labels[num_test_vectors:m], 3)
+        print "the classifier came back with: %s, the real answer is: %s" \
+              % (classifier_result, dating_labels[i])
 
+        if classifier_result != dating_labels[i]:
+            error_count += 1.0
 
+    print "the total error rate is: %f" % (error_count/float(num_test_vectors))
 

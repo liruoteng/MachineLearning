@@ -1,7 +1,7 @@
 __author__ = 'Liruo_000'
 from numpy import *
 import operator
-
+from os import listdir
 
 def classify0(inX, data_set, labels, k):
     data_set_size = data_set.shape[0]
@@ -90,3 +90,46 @@ def classify_person():
     classifier_result = classify0((in_array - min_value)/ranges, norm_matrix,dating_label, 3)
 
     print "you will probably like this person: ", classifier_result
+
+
+# chapter 2.3
+def img2vector(filename):
+    vector = zeros((1, 1024))
+    fr = open(filename)
+    for i in range(32):
+        line_string = fr.readline()
+        for j in range(32):
+            vector[0, 32*i + j] = int(line_string[j])
+
+    return vector
+
+
+def hand_writing():
+    labels = []
+    training_file_list = listdir('trainingDigits')
+    m = len(training_file_list)
+    training_matrix = zeros((m, 1024))
+    for i in range(m):
+        file_string = training_file_list[i]
+        file_name = file_string.split('.')[0]
+        class_number = int(file_name.split('_')[0])
+        labels.append(class_number)
+        training_matrix[i, :] = img2vector('trainingDigits/%s' % file_string)
+    test_file_list = listdir('testDigits')
+    error_count = 0.0
+    m_test = len(test_file_list)
+
+    for i in range(m_test):
+        file_string = test_file_list[i]
+        file_name = file_string.split('.')[0]
+        class_number = int(file_name.split('_')[0])
+        vector_under_test = img2vector('testDigits/%s' % file_string)
+        classifierResult = classify0(vector_under_test, training_matrix, labels, 5)
+
+        print "the classifier came back with: %d, the real answer is: %s" % (classifierResult, class_number)
+
+        if classifierResult != class_number:
+            error_count += 1.0
+
+    print "\n the total number of errors is: %d" % error_count
+    print "\n the total error rate i: %f" % (error_count/float(m_test))

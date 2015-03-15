@@ -28,6 +28,14 @@ import matplotlib.pyplot as plt
 # kNN.dating_class_test()
 
 # 2.2.5 putting together
-kNN.classify_person()
+#kNN.classify_person()
 
+# chapter 2.3
+"""
+Test:
+test_vector = kNN.img2vector('testDigits/0_13.txt')
+for i in range(32):
+    print test_vector[0, i:i+31]
+"""
 
+kNN.hand_writing()

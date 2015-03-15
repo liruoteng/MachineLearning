@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 # example 2.2.1
 # read matrix and labels(targes) from files
-dating_data_matrix, dating_label = kNN.file2matrix('datingTestSet.txt')
+# dating_data_matrix, dating_label = kNN.file2matrix('datingTestSet.txt')
 
 # Example 2.2.2
 # this example fails because it can't convert ndarray to flaot now
@@ -14,7 +14,7 @@ dating_data_matrix, dating_label = kNN.file2matrix('datingTestSet.txt')
 
 #Example 2.2.3
 # normalize numeric values
-norm_matrix, ranges, min_value = kNN.auto_norm(dating_data_matrix)
+# norm_matrix, ranges, min_value = kNN.auto_norm(dating_data_matrix)
 
 # create plot
 #fig = plt.figure()
@@ -26,4 +26,8 @@ norm_matrix, ranges, min_value = kNN.auto_norm(dating_data_matrix)
 # error rate
 
 # kNN.dating_class_test()
+
+# 2.2.5 putting together
+kNN.classify_person()
+
 

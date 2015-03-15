@@ -78,3 +78,15 @@ def dating_class_test():
 
     print "the total error rate is: %f" % (error_count/float(num_test_vectors))
 
+
+def classify_person():
+    result_list = ['not at all', 'in small doses', 'in large doses']
+    percent_time = float(raw_input("percentage of time spent playing video games?"))
+    fly_miles = float(raw_input("frequent flier miles earned per year?"))
+    ice_cream = float(raw_input("liters of ice cream consumed per year?"))
+    dating_data_matrix, dating_label = file2matrix('datingTestSet.txt')
+    norm_matrix, ranges, min_value = auto_norm(dating_data_matrix)
+    in_array = array([fly_miles, percent_time, ice_cream])
+    classifier_result = classify0((in_array - min_value)/ranges, norm_matrix,dating_label, 3)
+
+    print "you will probably like this person: ", classifier_result
